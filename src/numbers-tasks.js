@@ -488,8 +488,8 @@ function isInteger(number) {
  * 'abcdefgh'      => NaN
  */
 function getFloatOnString(str) {
-  const result = Number(str); // Convert the string to a number
-  return Number.isNaN(result) ? NaN : result; // Validate the result using isNaN
+  const result = Number.parseFloat(str);
+  return Number.isNaN(result) ? NaN : result;
 }
 
 /**
@@ -507,19 +507,11 @@ function getFloatOnString(str) {
  * '10', 8              => 8
  */
 function getIntegerOnString(str, base) {
-  const baseDigits = '0123456789abcdefghijklmnopqrstuvwxyz'.slice(0, base);
-
-  // Ensure that all characters in the string are valid for the given base
-  for (let i = 0; i < str.length; i += 1) {
-    const char = str[i].toLowerCase(); // Access the character at the current index
-    if (!baseDigits.includes(char)) {
-      return NaN; // If an invalid character is found, return NaN
-    }
+  if (base < 2 || base > 36) {
+    return NaN; // Ensure the base is within the valid range
   }
-
-  // Parse the string using the Number object with toString in the given base
-  const number = Number.parseInt(str, base);
-  return Number.isNaN(number) ? NaN : number;
+  const result = Number.parseInt(str, base);
+  return Number.isNaN(result) ? NaN : result;
 }
 
 /**
